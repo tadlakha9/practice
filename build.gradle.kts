@@ -39,14 +39,18 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+
 graalvmNative {
 	binaries {
 		named("main") {
 			buildArgs.addAll(listOf(
 					"--verbose",
-					"--initialize-at-build-time=com.example.practice.client.CustomerClient", // Initialize class at build time
+//					"--initialize-at-build-time=com.example.practice.client.CustomerClient", // Initialize class at build time
+//					"--initialize-at-run-time=com.example.practice.commons.RetrofitClientProvider", // Initialize class at run time
+					"-H:ThrowMissingRegistrationErrors=",
 					"-H:+ReportUnsupportedElementsAtRuntime",
-					"-H:Log=registerResource:"
+					"-H:Log=registerResource:",
+					"-R:MissingRegistrationReportingMode=Exit"
 			))
 		}
 	}
@@ -57,4 +61,8 @@ graalvmNative {
 		enabled = true
 	}
 
+}
+
+application {
+	mainClass.set("com.example.practice.PracticeApplication") // Replace with your actual main class
 }
